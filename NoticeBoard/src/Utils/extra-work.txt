@@ -1,0 +1,100 @@
+// setting group modal for creating group
+async groupDetails() {
+    this.setState({
+        groupModalVisible: true
+    })
+    let cmpID = await AsyncStorage.getItem('CompanyID');
+    fetch(`${Constants.BASE_URL}get_all_employees.php`,{
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            cmpID: cmpID,
+        })
+    }).then((response) => response._bodyText)
+    .then((responseJson) => {
+        let obj = responseJson.split("|");
+        this.setState({
+            employees: obj,
+            modalVisible: false
+        })
+    }).catch((error) => {
+        console.log('err',error);
+    })
+}
+var allEmployees = [];
+{
+    this.state.employees.map((key,mapKey) => {
+        console.log('key',key);
+        if( key != '' ) {
+            let keys = key.split(":")[0];
+            allEmployees.push(
+                <TouchableOpacity key={key.split(":")[0]} style={{marginTop: 20}} mapKey={mapKey} departID={key.split(":")[2]}
+                onPress={() => this.groupDetails(keys)}>
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.label, styles.departName ]}>{key.split(":")[1]}</Text>
+                        <Text style={styles.label}>{key.split(":")[2]}</Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        }
+    })
+}
+{
+    // modal for creating groups
+}
+<Modal
+    animationType="slide"
+    transparent={false}
+    visible={this.state.groupModalVisible}
+    onRequestClose={() => {
+        this.setState({
+            groupModalVisible: false
+        })
+    }}>
+    <View style={styles.groupModalContianer}>
+        <TextInput 
+            placeholder="Enter Group Name"
+            onChangeText={(event) => this.setState({groupname:event})}
+            style={styles.inputFields}
+            returnKeyType={"done"}
+            blurOnSubmit={false}
+            placeholderTextColor="#ddd" />
+        <ScrollView >
+            {
+                allEmployees
+            }
+        </ScrollView>
+        <TouchableOpacity
+            onPress={this.SaveGroup.bind(this)}
+            style={styles.savebutton}>
+            <Text style={styles.buttonText}>SAVE</Text>
+        </TouchableOpacity>
+        <View style={{padding: 3}}></View>
+        <TouchableOpacity
+            onPress={() => this.setState({groupModalVisible: false})}
+            style={styles.savebutton}>
+            <Text style={styles.buttonText}>CANCEL</Text>
+        </TouchableOpacity>
+        <View style={{padding: 3}}></View>
+    </View>
+</Modal>
+
+// showing selected images
+let selectedImage = [];
+this.state.allImages.map((image,key) => {
+    selectedImage.push(
+        <View style={{width: 120, height: 120}}>
+            <Image key={key} source={{uri: image.path}} style={[styles.modalImageStyle, {resizeMode: 'contain'}]}/>
+        </View>
+    )
+})
+<View style={styles.imagesBox}>
+    <ScrollView horizontal={true} contentContainerStyle={{flexGrow: 1}} >
+    {
+        selectedImage
+    }
+    </ScrollView>
+</View>

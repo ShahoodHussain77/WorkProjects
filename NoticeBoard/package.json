@@ -1,0 +1,31 @@
+{
+  "name": "NoticeBoard",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "16.6.1",
+    "react-native": "0.57.7",
+    "react-native-check-box": "^2.1.7",
+    "react-native-easy-toast": "^1.1.0",
+    "react-native-firebase": "^5.2.2",
+    "react-native-image-crop-picker": "^0.21.3",
+    "react-native-push-notification": "^3.1.2",
+    "react-native-swipe-list-view": "^1.5.2",
+    "react-native-vector-icons": "^6.1.0",
+    "react-navigation": "^2.18.3",
+    "rn-fetch-blob": "^0.10.15"
+  },
+  "devDependencies": {
+    "babel-jest": "23.6.0",
+    "jest": "23.6.0",
+    "metro-react-native-babel-preset": "0.51.1",
+    "react-test-renderer": "16.6.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
